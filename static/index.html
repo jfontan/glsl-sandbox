@@ -302,6 +302,11 @@ void main( void ) {
 
 				} else {
 
+					// This extension provides access to "dFdx", "dFdy", and "fwidth" functions from GLSL.
+					// A shader using these functions still needs to explicitly enable the extension with:
+					// #extension GL_OES_standard_derivatives : enable
+					gl.getExtension('OES_standard_derivatives');
+
 					// Create vertex buffer (2 triangles)
 
 					buffer = gl.createBuffer();
