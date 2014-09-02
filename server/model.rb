@@ -66,11 +66,12 @@ class GlslDatabase
             :code => code_data['code']
         }
 
-        res=Cloudinary::Uploader.upload(
-            code_data['image'],
-            :public_id => code_id.to_s)
+        image_url="thumbs/#{code_id.to_s}.png"
 
-        image_url=res['url']
+        open("public/"+image_url, 'w') do |f|
+            img=code_data['image'].split(',').last
+            f.write(Base64.decode64(img))
+        end
 
         @code.find_and_modify({
             :query => { :_id => code_id },
@@ -192,8 +193,8 @@ class GlslDatabase
 private
 
     def connect_database
-        uri = URI.parse(ENV['MONGOHQ_URL'])
-        conn = Mongo::Connection.from_uri(ENV['MONGOHQ_URL'])
+        uri = URI.parse(ENV['MONGO_URI'])
+        conn = Mongo::Connection.from_uri(ENV['MONGO_URI'])
         @db = conn.db(uri.path.gsub(/^\//, ''))
 
         @versions=@db.collection('versions')

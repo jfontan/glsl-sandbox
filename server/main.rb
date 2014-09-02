@@ -4,7 +4,7 @@ require 'sinatra'
 require 'mongo'
 require 'json'
 require 'erb'
-require 'cloudinary'
+require 'base64'
 
 $: << './server'
 
@@ -14,6 +14,7 @@ require 'pp'
 
 configure do
     set :public_folder, 'server/assets'
+    enable :static
 
     GALLERY=ERB.new(File.read('server/assets/gallery.html'))
 
