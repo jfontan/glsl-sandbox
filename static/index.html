@@ -67,6 +67,8 @@
 precision mediump float;
 #endif
 
+#extension GL_OES_standard_derivatives : enable
+
 uniform float time;
 uniform vec2 mouse;
 uniform vec2 resolution;
@@ -300,6 +302,9 @@ void main( void ) {
 					alert("WebGL not supported, but code will be shown.");
 
 				} else {
+					
+					// enable dFdx, dFdy, fwidth
+					gl.getExtension('OES_standard_derivatives');
 
 					// Create vertex buffer (2 triangles)
 
